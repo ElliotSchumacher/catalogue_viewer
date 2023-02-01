@@ -1,0 +1,12 @@
+<main>
+    <ul>
+        <% catalogue.forEach(function(product) { %>
+        <li>
+            <!-- <a href="/products/<%= product.id %>"> -->
+            <a href=<%= product.image %> target=<%= product.name %>>
+                <%= product.name %>
+            </a>
+        </li>
+        <% }); %>
+    </ul>
+</main>
