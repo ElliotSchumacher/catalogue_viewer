@@ -1,5 +1,4 @@
-const e = require("express");
-const express = require("express"); //npm install express
+const express = require("express");
 const { scrapeCatalogue } = require("./utils/scraper");
 require('dotenv').config();
 
