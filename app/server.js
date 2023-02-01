@@ -25,7 +25,13 @@ app.get("/", async (req, res) => {
     }
 });
 
+app.get("/test", (req, res) => {
+    res.send("Hello World!");
+});
+
 /* -------------------  Public Port  ------------------- */
 app.use(express.static("public"));
 const PORT = process.env.PORT || 8000;
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+});
