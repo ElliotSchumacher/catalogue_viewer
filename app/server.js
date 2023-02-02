@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 app.get("/", async (req, res) => {
     try {
         const catalogue = await scrapeCatalogue();
-        const sortedCatalogue = catalogue.sort((a, b) => {
+        catalogue.sort((a, b) => {
             const nameA = a.name.toUpperCase();
             const nameB = b.name.toUpperCase();
             if (nameA < nameB) {
