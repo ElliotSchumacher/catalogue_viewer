@@ -4,19 +4,23 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "nodemon local.js",
+    "deploy": "serverless deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Elliot Schumacher",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.4.0",
     "axios": "^1.2.6",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "serverless-express": "^2.0.12"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "serverless": "^3.27.0"
   }
 }

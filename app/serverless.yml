@@ -1,0 +1,16 @@
+service: lavassar-catalogue
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  memorySize: 128
+  timeout: 10
+  stage: production
+  region: us-west-2
+
+functions:
+  api:
+    handler: lambda.universal
+    events:
+      - http: ANY {proxy+}
+      - http: ANY /
