@@ -6,3 +6,4 @@ app/.serverless/cloudformation-template-create-stack.json
 app/.serverless/cloudformation-template-update-stack.json
 app/.serverless/lavassar-catalogue.zip
 app/.serverless/serverless-state.json
+app/responses/*
