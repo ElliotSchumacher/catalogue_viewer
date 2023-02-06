@@ -33,6 +33,7 @@ function scrapePage(catalogue, rawProducts, $) {
     rawProducts.each((i, el) => {
         const image = $(el).find("img.item-img").attr("src");
         const name = $(el).find("span.itemInfo-name--desktop").text().trim();
-        catalogue.push({ image, name });
+        const price = parseFloat($(el).find("span.itemInfo-price").text().trim().substring(1)); // Remove dollar sign
+        catalogue.push({ image, name, price });
     });
 }

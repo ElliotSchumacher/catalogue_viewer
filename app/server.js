@@ -3,11 +3,14 @@ const { scrapeCatalogue } = require("./utils/scraper");
 require('dotenv').config();
 
 const app = express();
+const HOST = process.env.HOST || "http://localhost:8000";
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
     try {
-        const catalogue = await scrapeCatalogue();
+        let catalogue = await scrapeCatalogue();
+        const regex = new RegExp(/designer.s.*choice/, "i");
+        catalogue = catalogue.filter(product => !regex.test(product.name));
         catalogue.sort((a, b) => {
             const nameA = a.name.toUpperCase();
             const nameB = b.name.toUpperCase();
@@ -19,9 +22,18 @@ app.get("/", async (req, res) => {
                 return 0;
             }
         });
-        res.render("index", { catalogue });
+        res.render("index", { catalogue, HOST });
     } catch (error) {
         res.status(500).send(error);
+    }
+});
+
+app.get("/image", (req, res) => {
+    const { image, name } = req.query;
+    if (!image || !name) {
+        res.status(400).send("Missing image or name query parameter.");
+    } else {
+        res.render("image", { image, name });
     }
 });
 
