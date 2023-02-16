@@ -3,7 +3,9 @@ const { scrapeCatalogue } = require("./utils/scraper");
 require('dotenv').config();
 
 const app = express();
-const HOST = process.env.HOST || "http://localhost:8000";
+const HOST = process.env.HOST || "http://localhost";
+const PORT = process.env.PORT || 8000;
+
 app.set("view engine", "ejs");
 
 app.get("/", async (req, res) => {
@@ -22,7 +24,7 @@ app.get("/", async (req, res) => {
                 return 0;
             }
         });
-        res.render("index", { catalogue, HOST });
+        res.render("index", { catalogue, HOST, PORT });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -43,7 +45,6 @@ app.get("/test", (req, res) => {
 
 /* -------------------  Public Port  ------------------- */
 app.use(express.static("public"));
-const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
 });

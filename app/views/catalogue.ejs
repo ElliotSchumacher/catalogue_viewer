@@ -1,6 +1,6 @@
 <main>
     <% catalogue.forEach(function(product) { %>
-    <a href=<%= `${HOST}/image?name=${product.name.replaceAll(" ", "%20")}&image=${product.image}` %> target=<%= product.name %>>
+    <a href=<%= `${HOST}:${PORT}/image?name=${product.name.replaceAll(" ", "%20")}&image=${product.image}` %> target=<%= product.name %>>
         <h2><%= product.name %></h2>
         <img src=<%= product.image %> alt="<%= product.name %>">
         <p>$<%= product.price %></p>
