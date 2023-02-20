@@ -8,13 +8,18 @@ exports.scrapeCatalogue = async () => {
         const rawProducts = $("div.item-wrapper"); 
         const productsPerPage = rawProducts.length;
         const productPages = Math.ceil(totalProductCount / productsPerPage);
-
         const catalogue = [];
-        scrapePage(catalogue, rawProducts, $);
+        extractData(catalogue, rawProducts, $);
+
+        const pageParameters = [];
         for (let page = 2; page <= productPages; page++) {
-            $ = await loadPageDOM(page);
-            const rawProducts = $("div.item-wrapper");
-            scrapePage(catalogue, rawProducts, $);
+            pageParameters.push(page);
+        }
+        await Promise.all(pageParameters.map((page) => scrapePage(page, catalogue)));
+        if (catalogue.length !== totalProductCount) {
+            console.log(catalogue);
+            console.log(`catalogueLength: ${catalogue.length}, totalProductCount: ${totalProductCount}`);
+            throw new Error("Catalogue length does not match total product count.");
         }
         return catalogue;
     } catch (error) {
@@ -29,11 +34,17 @@ async function loadPageDOM(page) {
     return $;
 }
 
-function scrapePage(catalogue, rawProducts, $) {
+function extractData(catalogue, rawProducts, $) {
     rawProducts.each((i, el) => {
         const image = $(el).find("img.item-img").attr("src");
         const name = $(el).find("span.itemInfo-name--desktop").text().trim();
         const price = parseFloat($(el).find("span.itemInfo-price").text().trim().substring(1)); // Remove dollar sign
         catalogue.push({ image, name, price });
     });
+}
+
+async function scrapePage(parameter, catalogue) {
+    const $ = await loadPageDOM(parameter);
+    const rawProducts = $("div.item-wrapper");
+    extractData(catalogue, rawProducts, $);
 }
